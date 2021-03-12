@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Follow a user</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Follow a user</h1>
+    <p>If you think a user is interesting, you can follow them. This means you want to see their content and activity on your home page.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Go to the user's profile page by clicking on their username or profile picture.</li>
+        <li>In the left column under the user's profile picture, click the blue <button class="btn btn-primary">Follow</button> button.</li>
+    </ol>
+    <p>If you successfully follow the user, you will see a message that says "You are now following [USERNAME]."</p>
+{% endblock %}

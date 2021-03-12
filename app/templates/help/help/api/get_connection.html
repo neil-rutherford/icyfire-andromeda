@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Get information about a relationship between two users</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Get information about a relationship between two users</h1>
+    <p>Returns information about a relationship between two users. Takes <code>user1_id</code> (user 1 primary key, as an integer) and <code>user2_id</code> (user 2 primary key, as an integer) as arguments.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/get/connection/[USER1_ID]&[USER2_ID]</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET]
+            }</code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>200 status code</li>
+            <li>JSON object</li>
+            <li><code>{
+                    'user1_follows_user2': Does User 1 follow User 2? (bool),
+                    'user2_follows_user1': Does User 2 follow User 1? (bool),
+                    'user1_messages_user2': How many messages has User 1 sent to User 2? (int),
+                    'user2_messages_user1': How many messages has User 2 sent to User 1? (int)
+            }</code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Example response</td>
+            <td><code>{
+                'user1_follows_user2': true,
+                'user2_follows_user1': false,
+                'user1_messages_user2': 413,
+                'user2_follows_user1': 3
+            }</code></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>404: Can't find one of the users.</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

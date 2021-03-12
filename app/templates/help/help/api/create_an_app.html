@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create an app</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Create an app</h1>
+    <p>Before you may begin using the Galatea API, you must first register an app. To do this, go to the <a href="{{ url_for('api.apply') }}">"Apply for API permissions"</a> page and fill out the form. The information you provide will help us guide you through the process. If we find that you have been untruthful in your application, we reserve the right to adjust your permissions as we see fit.</p>
+    <ul>
+        <li><b>Company name:</b> If you are an individual, please write "Individual". Otherwise, please enter your corporate entity's legal name.</li>
+        <li><b>Contact name:</b> If you are an individual, please write your full legal name. Otherwise, please enter a point of contact for your company.</li>
+        <li><b>POC phone number:</b> Please enter your/your representative's 10-digit U.S. or Canadian phone number. Foreign phone numbers are not accepted at this time.</li>
+        <li><b>POC email:</b> Please enter your/your representative's email address. It can be the same as the email address you used to register for an account on Galatea.</li>
+    </ul>
+    <p>Standard API clients are restricted to the following standard permissions:</p>
+    <ul>
+        <li><b>Articles:</b> It allows you to view existing articles, as well as create and delete your own (if you have an active Patriot Tier subscription).</li>
+        <li><b>Comments:</b> It allows you to view existing comments for a given article, as well as create and delete your own.</li>
+        <li><b>Users:</b> It allows you to view users' information, as well as create and delete user accounts.</li>
+        <li><b>Messages:</b> It allows you to create, retrieve, and delete messages.</li>
+    </ul>
+    <p>Premium API clients may apply for the following escalated permissions:</p>
+    <ul>
+        <li><b>Logs:</b> It allows you to view detailed activity logs about website visitors.</li>
+        <li><b>Shares:</b> It allows you to view detailed logs about social media propagation.</li>
+        <li><b>Connections:</b> It allows you to view relationships between users, as well as the nature of their relationship.</li>
+        <li><b>API:</b> It allows you to review and approve API client applications.</li>
+    </ul>
+    <p>Once you have chosen the permissions you plan to use and provided a justification, move on to the next section and tell the reviewers a little more about your app:</p>
+    <ul>
+        <li><b>Use case:</b> How do you plan to use the API?</li>
+        <li><b>Developer platform:</b> What platform are you developing your app for?</li>
+        <li><b>Monetization model:</b> If you plan to make money from the Galatea API, please explain here. Otherwise, enter "N/A".</li>
+    </ul>
+    <p>After you submit your application, your app will go into a review stage and you will receive a response within 3 business days. You may <a href="{{ url_for('api.view_client') }}">check on the status of your app here</a>. If reviewers have any questions, they will communicate with you via the email you provided. If you have applied for escalated permissions, <a href="{{ url_for('payment.buy_premium_api') }}">subscribe to the Premium API Tier</a> as soon as possible so that your application is not hindered.</p>
+{% endblock %}

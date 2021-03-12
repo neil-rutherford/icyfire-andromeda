@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Redeem coins for Patriot Tier subscription</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Redeem coins for Patriot Tier subscription</h1>
+    <p>As the community interacts with one of your articles, you will receive coins. You may redeem 500 coins for 30 days of Patriot Tier subscription.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>Scroll to the "Coins" subsection of the "Manage your account" section. Click the grey <a href="{{ url_for('main.redeem_coins') }}"><button class="btn btn-secondary">Redeem Coins</button></a> button.</li>
+    </ol>
+    <p>If the transaction was successful, you will see a message that says "Transaction successful. You have spent 500 coins, and your subscription has been extended by 30 days."</p>
+{% endblock %}

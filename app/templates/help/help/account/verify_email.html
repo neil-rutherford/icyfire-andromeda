@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Verify my email</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Verify my email</h1>
+    <p>You must verify your email address to use certain functionality on Galatea, such as receiving email updates. We have you do this so we can protect against bots and so that we don't send more emails than we need to.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>Scroll down to the "Verify your email" subsection of the "Manage your account" section. Click on the yellow <a href="{{ url_for('auth.send_verification_email') }}"><button type="button" class="btn btn-warning">Verify Email</button></a> button.</li>
+        <li>Check your email inbox. Galatea will send you an email with the subject "Verify your email". If you don't see the email in your inbox, check your junk email folder.</li>
+        <li>Open the email and click the link as instructed. The link is only valid for 10 minutes.</li>
+        <li>When your email has been successfully verified, you will see a message that says "Your email has been verified. Thanks!".</li>
+    </ol>
+{% endblock %}

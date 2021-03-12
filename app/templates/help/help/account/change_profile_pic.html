@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Change my profile picture</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Change my profile picture</h1>
+
+    <p>Users who have an active Patriot Tier subscription can change their profile picture. You may find instructions for how to do this on the <a href="{{ url_for('auth.change_profile_pic') }}">"Change your profile picture"</a> page.</p>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="text-center">Apply for API Access</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="text-center bg-light text-dark rounded">
+        <h5 class="text-center">Basic Information</h5>
+        <div class="form-group">
+            {{ form.company_name.label }}<br>
+            {{ form.company_name(_class="form-control form-control-lg") }}<br>
+            {% for error in form.company_name.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+            <small class="form-text text-muted">Write N/A if you are an individual.</small>
+        </div>
+        <div class="form-group">
+            {{ form.contact_name.label }}<br>
+            {{ form.contact_name(_class="form-control form-control-lg") }}<br>
+            {% for error in form.contact_name.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+            <small class="form-text text-muted">Please use the following format: Surname, Given.</small>
+        </div>
+        <div class="form-group">
+            {{ form.phone_number.label }}<br>
+            {{ form.phone_number(_class="form-control form-control-lg") }}<br>
+            {% for error in form.phone_number.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+            <small class="form-text text-muted">+1 country code is assumed. API clients outside the United States are not currently supported.</small>
+        </div>
+        <div class="form-group">
+            {{ form.email.label }}<br>
+            {{ form.email(_class="form-control form-control-lg") }}<br>
+            {% for error in form.email.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        </div>
+        <hr>
+        <div class="text-center bg-light text-dark rounded">
+        <h5 class="text-center">Request Permissions</h5>
+        <small class="text-muted">Standard permissions are not sensitive and generally do not require an explanation. Escalated permissions are sensitive and require justification. Permissions are subject to revocation at any time for any reason.</small>
+        <div class="form-check form-switch">
+            {{ form.is_articles(_class="form-check") }}
+            {{ form.is_articles.label }}<br>
+            <small class="form-text text-muted">This is a standard permission. It allows you to view existing articles, as well as create and delete your own (if you have an active user subscription).</small>
+        </div>
+        <div class="form-check form-switch">
+            {{ form.is_comments(_class="form-check") }}
+            {{ form.is_comments.label }}<br>
+            <small class="form-text text-muted">This is a standard permission. It allows you to view existing comments for a given article, as well as create and delete your own.</small>
+        </div>
+        <div class="form-check form-switch">
+            {{ form.is_logs(_class="form-check") }}
+            {{ form.is_logs.label }}<br>
+            <small class="form-text text-muted">This is an escalated permission. It allows you to view detailed activity logs about website visitors.</small>
+        </div>
+        <div class="form-check form-switch">
+            {{ form.is_shares(_class="form-check") }}
+            {{ form.is_shares.label }}<br>
+            <small class="form-text text-muted">This is an escalated permission. It allows you to view detailed logs about social media propagation.</small>
+        </div>
+        <div class="form-check form-switch">
+            {{ form.is_users(_class="form-check") }}
+            {{ form.is_users.label }}<br>
+            <small class="form-text text-muted">This is a standard permission. It allows you to view users' information, as well as create and delete user accounts.</small>
+        </div>
+        <div class="form-check form-switch">
+            {{ form.is_connections(_class="form-check") }}
+            {{ form.is_connections.label }}<br>
+            <small class="form-text text-muted">This is an escalated permission. It allows you to view relationships between users, as well as the nature of their relationship.</small>
+        </div>
+        <div class="form-check form-switch">
+            {{ form.is_messages(_class="form-check") }}
+            {{ form.is_messages.label }}<br>
+            <small class="form-text text-muted">This is a standard permission. It allows you to create, retrieve, and delete messages.</small>
+        </div>
+        <div class="form-check form-switch">
+            {{ form.is_api(_class="form-check") }}
+            {{ form.is_api.label }}<br>
+            <small class="form-text text-muted">This is an escalated permission. It allows you to review and approve API client applications.</small>
+        </div>
+        <div class="form-group">
+            {{ form.permission_justification.label }}<br>
+            {{ form.permission_justification(_class="form-control form-control-lg") }}<br>
+            {% for error in form.permission_justification.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+        </div>
+        </div>
+        <hr>
+        <div class="text-center bg-light text-dark rounded">
+        <h5 class="text-center">More About Your App</h5>
+        <div class="form-group">
+            {{ form.use_case.label }}<br>
+            {{ form.use_case(_class="form-control form-control-lg") }}<br>
+            {% for error in form.use_case.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+            <small class="form-text text-muted">How do you intend to use the Galatea API?</small>
+        </div>
+        <div class="form-group">
+            {{ form.developer_platform.label }}<br>
+            {{ form.developer_platform(_class="form-control form-control-lg") }}<br>
+            {% for error in form.developer_platform.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+            <small class="form-text text-muted">Examples: iOS, Android, Chrome browser, etc.</small>
+        </div>
+        <div class="form-group">
+            {{ form.monetization_model.label }}<br>
+            {{ form.monetization_model(_class="form-control form-control-lg") }}<br>
+            {% for error in form.monetization_model.errors %}
+                <span style="color: red;">{{ error }}</span><br>
+            {% endfor %}
+            <small class="form-text text-muted">How do you plan to make money with the Galatea API? If none, please enter N/A.</small>
+        </div>
+        </div>
+        <br>
+        <div class="text-center">{{ form.submit() }}</div>
+        <small class="text-muted">By clicking the submit button, you signal your agreement to the <a href="{{ url_for('help.api_terms_of_use') }}">Galatea API Terms of Use</a>.</small>
+    </form>
+{% endblock %}

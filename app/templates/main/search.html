@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="text-center">{{ title }}</h1>
+    <hr>
+    {% for result in results %}
+        <div class="card bg-light mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img id="card-image" src="{{ result.image_file_path }}" class="card-img" alt="{{ article.description }}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                    {% if article.section == 1 %}
+                        <p id="card-section">U.S. POLITICS</p>
+                    {% elif article.section == 2 %}
+                        <p id="card-section">WORLD NEWS</p>
+                    {% elif article.section == 3 %}
+                        <p id="card-section">TECHNOLOGY</p>
+                    {% elif article.section == 4 %}
+                        <p id="card-section">ENERGY / ENVIRONMENT</p>
+                    {% elif article.section == 5 %}
+                        <p id="card-section">ECONOMY / BUSINESS</p>
+                    {% elif article.section == 6 %}
+                        <p id="card-section">SCIENCE / RELIGION</p>
+                    {% elif article.section == 7 %}
+                        <p id="card-section">HEALTH</p>
+                    {% else %}
+                        <p id="card-section">SECTION</p>
+                    {% endif %}
+                    <h3 id="card-title" class="card-title">{{ article.title }}</h3>
+                    <p id="card-description" class="card-text">{{ article.description }}</p>
+                    <div id="card-tags">
+                    {% set tag_list = article.tags.split(', ') %}
+                    {% for tag in tag_list %}
+                        <span class="badge bg-secondary">{{ tag }}</span> 
+                    {% endfor %}
+                    </div>
+                    <p class="card-text"><small class="text-muted">{{ moment(result.timestamp).format('LLL') }}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

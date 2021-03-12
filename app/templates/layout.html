@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <!--- Cookie banner -->
+        <script type="text/javascript" id="cookiebanner" src="https://cdn.jsdelivr.net/gh/dobarkod/cookie-banner@1.2.2/dist/cookiebanner.min.js"></script>
+
+        <!---Bootstrap --->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <!--- Animate.CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+        <!---Moment.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        
+        <!---Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <title>{% if title %}{{ title }} - Galatea News{% else %}Welcome to Galatea News{% endif %}</title>
+        
+        {{ moment.include_jquery() }}
+        {{ moment.include_moment() }}
+        {% block head %}{% endblock %}
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">Galatea News</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbarNavDropdown" class="navbar-collapse collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Sections
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{{ url_for('main.view_section', section='politics') }}">U.S. Politics</a>
+                            <a class="dropdown-item" href="{{ url_for('main.view_section', section='world') }}">World News</a>
+                            <a class="dropdown-item" href="{{ url_for('main.view_section', section='technology') }}">Technology</a>
+                            <a class="dropdown-item" href="{{ url_for('main.view_section', section='energy') }}">Energy / Environment</a>
+                            <a class="dropdown-item" href="{{ url_for('main.view_section', section='economy') }}">Economy / Business</a>
+                            <a class="dropdown-item" href="{{ url_for('main.view_section', section='science') }}">Science / Religion</a>
+                            <a class="dropdown-item" href="{{ url_for('main.view_section', section='health') }}">Health</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('help.help') }}">Help</a>
+                    </li>
+
+                </ul>
+                <!---
+                <div class="col-sm-6 mx-auto">
+                <form method="GET" action="<<url_for('main.search')>>" class="container-fluid my-2 my-lg-0 mx-auto">
+                    <div class="input-group">
+                        <input id="query" name="query" type="text" class="form-control" placeholder="Search...">
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </div>
+                </form>
+                </div>
+                --->
+                {% if current_user.is_anonymous %}
+                <ul class="navbar-nav">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}"><button class="btn btn-outline-primary"><b>Log In</b></button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.register') }}"><button class="btn btn-danger"><b>Register</b></button></a>
+                    </li>
+                </ul>
+                {% elif current_user.check_subscription() is true %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.customize_article') }}"><button class="btn btn-outline-primary">Write an Article</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.inbox') }}"><button class="btn btn-outline-secondary">Inbox <span class="badge bg-secondary">{{ current_user.unread_message_count() }}</span></button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}"><button class="btn btn-outline-danger"><b>Log Out</b></button></a>
+                    </li>
+                </ul>
+                {% elif current_user.check_subscription() is false %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('payment.buy_patriot_tier') }}"><button class="btn btn-outline-success">Upgrade</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.inbox') }}"><button class="btn btn-outline-secondary">Inbox <span class="badge bg-secondary">{{ current_user.unread_message_count() }}</span></button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}"><button class="btn btn-outline-danger"><b>Log Out</b></button></a>
+                    </li>
+                </ul>
+                {% endif %}--->
+            </div>
+            </div>
+        </nav>
+        {% block banner %}{% endblock %}
+
+        <div class="container">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+        </div>
+        <div class="container">
+        {% block content %}{% endblock %}
+        
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="row">
+        <div class="col-12 col-md">
+            <img class="mb-2" src="{{ url_for('static', filename='logo.png') }}" alt="Galatea News logo" width="100px" height="100px">
+            <small class="d-block mb-3 text-muted">&copy; 2021-2022</small>
+        </div>
+        <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="{{ url_for('help.about') }}">About Galatea</a></li>
+                <li><a class="text-muted" href="{{ url_for('help.careers') }}">Careers</a></li>
+                <li><a class="text-muted" href="{{ url_for('help.contact') }}">Contact</a></li>
+                
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Product</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="{{ url_for('payment.buy_patriot_tier') }}">Pricing</a></li>
+                <li><a class="text-muted" href="{{ url_for('blog.blog') }}">Survival Blog</a></li>
+                <li><a class="text-muted" href="{{ url_for('help.help') }}">Help Pages</a></li>
+                <!---<li><a class="text-muted" href="#">下载APP</a></li>-->
+                <li><a class="text-muted" href="{{ url_for('payment.buy_premium_api') }}">Developers</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Legal</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="{{ url_for('help.content_policy') }}">Content Policy</a></li>
+                    <li><a class="text-muted" href="{{ url_for('help.cookies') }}">Cookie Policy</a></li>
+                    <li><a class="text-muted" href="{{ url_for('help.privacy_policy') }}">Privacy Policy</a></li>
+                    <li><a class="text-muted" href="{{ url_for('help.disclaimers') }}">Disclaimers</a></li>
+                    <li><a class="text-muted" href="{{ url_for('help.terms_of_service') }}">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    </div>
+    </body>
+</html>

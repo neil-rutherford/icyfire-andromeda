@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Set my status</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Set my status</h1>
+    <p>Users who have an active Patriot Tier subscription can set their status. This can say whatever you like, provided it is 100 characters or less and abides by our <a href="{{ url_for('help.content_policy') }}">Content Policy</a>.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>In the "About You" section, locate the field under "Status". If this is your first time setting your status, you will see a <small class="text-muted">What's up?</small> placeholder in the field. If you have previously set a status, your previous status will be displayed in the field.</li>
+        <li>If you have previously set a status, you must first delete the old one. You can do this by clicking in the field, pressing the <code>Ctrl + A</code> keys at the same time, then pressing <code>Del</code>.</li>
+        <li>Type your new status into the box. Your status can be a maximum of 100 characters long.</li>
+        <li>When you are finished, click the blue <button class="btn btn-outline-primary">Post</button> button.</li>
+    </ol>
+    <p>If you have successfully set your status, you will see a message that says "Status successfully updated!". You will also see your new status in the "Status" field.</p>
+{% endblock %}

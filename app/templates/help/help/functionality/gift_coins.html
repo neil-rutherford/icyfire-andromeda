@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Send coins to friends</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Send coins to friends</h1>
+    <p>As the community interacts with one of your articles, you will receive coins that can be <a href="{{ url_for('help.help_title', topic='fuctionality', title='redeem_coins') }}">redeemed for a Patriot Tier subscription</a>. You may gift coins to other users at any time for any reason.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>Scroll to the "Coins" subsection of the "Manage your account" section. Click the grey <button class="btn btn-secondary">Send Handout</button> button.</li>
+        <li>In the pop-up, fill out the recipient's username and how many coins you would like to give. If you'd like, you may also leave a message.</li>
+        <li>When you are finished, click the blue <button class="btn btn-primary">Send Handout</button> button at the bottom of the pop-up.</li>
+    </ol>
+    <p>If the gift was successful, you will see a message that says "You have successfully gifted [AMOUNT] coins to [USERNAME]."</p>
+{% endblock %}

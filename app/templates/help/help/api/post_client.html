@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Modify an app's permissions</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Modify an app's permissions</h1>
+    <p>Modifies the status of an app. Takes <code>api_client_id</code> (API client primary key, as an integer) as an argument.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/post/client/[API_CLIENT_ID]</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET],
+                'is_approved': If true, the app can begin to make requests (bool),
+                'is_blacklist': If true, the app can no longer make requests (bool),
+                'is_articles': Articles permission (bool),
+                'is_comments': Comments permission (bool),
+                'is_logs': Logs permission (bool),
+                'is_shares': Shares permission (bool),
+                'is_users': Users permission (bool),
+                'is_connections': Connections permission (bool),
+                'is_messages': Messages permission (bool),
+                'is_api': API permission (bool),
+            }</code></td>
+        </tr>
+        <tr>
+            <td>Example POST input</td>
+            <td><code>
+            {
+                'consumer_key': "c0n5um3r_k3y",
+                'consumer_secret': "c0n5um3r_53cr37",
+                'is_approved': true,
+                'is_blacklist': false,
+                'is_articles': true,
+                'is_comments': true,
+                'is_logs': false,
+                'is_shares': false,
+                'is_users': true,
+                'is_connections': true,
+                'is_messages': false,
+                'is_api': false
+            }
+            </code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>200 status code</li>
+            <li>JSON object</li>
+            <li><code>{
+                    'status': 200,
+                    'response': 'SUCCESS: API Client [CLIENT_ID] updated.'
+            }</code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>404: Client not found.</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

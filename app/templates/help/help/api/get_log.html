@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Get information about a log</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Get information about a log</h1>
+    <p>Returns information about a given log. Takes <code>activity_log_id</code> (log primary key, as an integer) as an argument.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/get/log/[ACTIVITY_LOG_ID]</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET]
+            }</code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>200 status code</li>
+            <li>JSON object</li>
+            <li><code>{
+                    'id': Primary key (int),
+                    'article_id': Primary key for article that was viewed (int),
+                    'anonymous_uuid': Tracking UUID for anonymous users (str),
+                    'user_id': User primary key for logged in users (int),
+                    'share_id': Share primary key (if applicable) (int),
+                    'ip_address': IP address for the request (str),
+                    'referrer_page': Where did the user come from? (str),
+                    'user_agent': Browser and operating system information (str),
+                    'timestamp': UTC timestamp (datetime)
+            }</code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Example response</td>
+            <td><code>{
+                'id': 7309,
+                'article_id': 63,
+                'anonymous_uuid': 'd2065a7d-4352-46a1-945c-74cd4bc7a243',
+                'user_id': null,
+                'share_id': 649,
+                'ip_address': '156.49.238.72',
+                'referrer_page': 'https://www.facebook.com/zuck',
+                'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36',
+                'timestamp': 2021-02-26T00:39:44.126285Z
+            }</code></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>404: Log not found.</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

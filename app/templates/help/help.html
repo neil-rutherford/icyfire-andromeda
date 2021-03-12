@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="text-center">Help Topics</h1>
+    <br>
+    <div class="row">
+        <div class="card col-sm-4">
+            <img src="https://pixy.org/src2/574/thumbs350/5744040.jpg" class="card-img-top" alt="Account help">
+            <div class="card-body">
+                <h5 class="card-title">Account Help</h5>
+                <p class="card-text">Topics relating to the management of your Galatea account.</p>
+                <a href="{{ url_for('help.help_topic', topic='account') }}" class="stretched-link"></a>
+            </div>
+        </div>
+        
+        <div class="card col-sm-4">
+            <img src="https://p0.piqsels.com/preview/813/374/453/person-using-macbook-pro-thumbnail.jpg" class="card-img-top" alt="Functionality help">
+            <div class="card-body">
+                <h5 class="card-title">Functionality Help</h5>
+                <p class="card-text">Topics relating to general use of the Galatea website.</p>
+                <a href="{{ url_for('help.help_topic', topic='functionality') }}" class="stretched-link"></a>
+            </div>
+        </div>
+        <div class="card col-sm-4">
+            <img src="https://cdn.pixabay.com/photo/2020/02/15/14/19/network-4851079_1280.jpg" class="card-img-top" alt="API help">
+            <div class="card-body">
+                <h5 class="card-title">API Help</h5>
+                <p class="card-text">Topics relating to the Galatea Application Programming Interface (API).</p>
+                <a href="{{ url_for('help.help_topic', topic='api') }}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

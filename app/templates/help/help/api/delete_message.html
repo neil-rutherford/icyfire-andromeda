@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete a message</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Delete a message</h1>
+    <p>Deletes a message. Requires the linked user account to be the sender or recipient of the message. Takes <code>message_id</code> (message primary key, as an integer) as an argument.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/delete/message/[MESSAGE_ID]</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET]
+            }</code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>204 status code</li>
+            <li>JSON object</li>
+            <li><code>
+            {
+                'status': 204,
+                'response': "SUCCESS: Message [MESSAGE_ID] deleted.
+            }
+            </code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>400: Some sort of error occurred when deleting the article object.</li>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. Could also be trying to delete a message that isn't yours.</li>
+                    <li>404: Article not found.</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

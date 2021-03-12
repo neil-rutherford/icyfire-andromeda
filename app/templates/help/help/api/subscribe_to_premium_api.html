@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Subscribe to Premium API</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Subscribe to Premium API</h1>
+    <p>The Galatea API has two tiers -- free and premium. The free tier is designed for hobbyists and proofs-of-concept. As a result, it has severe permissions and rate limit restrictions. If you would like to use the Galatea API in a production environment, we highly recommend upgrading to the Premium API Tier.</p>
+    <p>With the Premium API Tier, clients may increase their rate limit to 3,600 requests per hour (as opposed to 60 requests per hour in the free tier) and apply for escalated permissions.</p>
+    <p>Before beginning your subscription, you should have already <a href="{{ url_for('help.help_title', topic='api', title='create_an_app') }}">created an app</a>. Go to the <a href="{{ url_for('payment.buy_premium_api') }}">"Start your Premium API subscription"</a> page. Clicking the green <button class="btn btn-success">Get started</button> will begin the payment process.</p>
+    <p>You may <a href="{{ url_for('help.help_title', topic='api', title='unsubscribe_from_premium_api') }}">cancel your subscription</a> at any time.</p> 
+{% endblock %}

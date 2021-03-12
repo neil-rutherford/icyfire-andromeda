@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+    <meta name="description" content="Find the Galatea API plan that is right for you. Plans include recurring billing, increased rate limits, and tools to keep you informed." />
+    <meta itemprop="name" content="{{ title }}">
+    <meta itemprop="description" content="Find the Galatea API plan that is right for you. Plans include recurring billing, increased rate limits, and tools to keep you informed.">
+    <meta itemprop="image" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ title }}">
+    <meta name="twitter:description" content="Find the Galatea API plan that is right for you. Plans include recurring billing, increased rate limits, and tools to keep you informed.">
+    <meta name="twitter:image:src" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg">
+
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg" />
+    <meta property="og:description" content="Find the Galatea API plan that is right for you. Plans include recurring billing, increased rate limits, and tools to keep you informed." />
+    <meta property="og:site_name" content="Galatea News" />
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:700px;">
+        <h1 class="display-4">API Pricing</h1>
+        <p class="lead">Upgrade your API plan and get around the restrictions.</p>
+    </div>
+    <div class="row text-center">
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 fw-normal">Standard API Tier</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li><h5>60 requests / hour</h5>
+                    <ul class="list-unstyled">
+                            <li><small class="text-muted">Perfect for hobbyists and proof of concept.</small></li>
+                        </ul>
+                    </li><br/>
+                    <li><h5>Restricted access</h5>
+                    <ul class="list-unstyled">
+                            <li><small class="text-muted">Access is limited by default to standard permissions.</small></li>
+                        </ul>
+                    </li><br/>
+                </ul>
+                <button type="button" class="w-100 btn btn-lg btn-outline-primary" disabled>Your current subscription tier</button>
+            </div>
+        </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <h4 class="my-0 fw-normal">Premium API Tier</h4>
+            </div>
+            <div class="card-body">
+                <h1 class="card-title pricing-card-title">$5 <small class="text-muted">/ mo</small></h1>
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li><h5>3,600 requests / hour</h5> 
+                        <ul class="list-unstyled">
+                            <li><small class="text-muted">Perfect for start-ups starting to gain traction.</small></li>
+                        </ul>
+                    </li>
+                    <br/>
+                    <li><h5>Semi-restricted access</h5>
+                        <ul class="list-unstyled">
+                            <li><small class="text-muted">Access is decided on a case-by-case basis.</small></li>
+                        </ul>
+                    </li>
+                    <br/>
+                    <li><h5>Email support</h5>
+                    <ul class="list-unstyled">
+                            <li><small class="text-muted">Get the help and support you need.</small></li>
+                        </ul>
+                    </li>
+                    <br/>
+                </ul>
+            <button id="buy_now_btn" type="button" class="w-100 btn btn-lg btn-success">Get started</button>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        const checkout_public_key = '{{checkout_public_key}}';
+        const checkout_session_id = '{{checkout_session_id}}';
+        var stripe = Stripe(checkout_public_key);
+
+        const button = document.querySelector('#buy_now_btn');
+
+        button.addEventListener('click', event => {
+            stripe.redirectToCheckout({
+                // Make the id field from the Checkout Session creation API response
+                // available to this file, so you can provide it as parameter here
+                // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+                sessionId: checkout_session_id
+            }).then(function (result) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, display the localized error message to your customer
+                // using `result.error.message`.
+            });
+        })
+    </script>
+{% endblock %}

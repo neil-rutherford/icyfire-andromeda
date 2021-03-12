@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete my account</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Delete my account</h1>
+    <h2 class="text-center">What happens if I permanently delete my Galatea account?</h2>
+    <ul>
+        <li>You won't be able to reactivate your account.</li>
+        <li>All information related to your account, such as your email address and your gender, will be removed. Your articles and comments will remain on the site, but they will not be attributable to you.</li>
+        <li>You will no longer be able to use or access your Galatea messages.</li>
+        <li>You won't be able to access your coins.</li>
+        <li>If you have a Patriot Tier subscription, it will be cancelled.</li>
+        <li>API apps associated with your account will lose all permissions. Premium API subscriptions will be cancelled.</li>
+    </ul>
+    <h2 class="text-center">How do I permanently delete my account?</h2>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>Scroll down to the "Delete Account" subsection of the "Manage your account" section.</li>
+        <li>Click the red <a href="{{ url_for('auth.delete_account') }}" onclick="return confirm('This action cannot be undone. Are you sure you want to continue?');"><button type="button" class="btn btn-danger">Delete Account</button></a> button. When prompted, confirm your decision to delete your account.</li>
+        <li>You will be logged out and you will see a message that says "You have successfully deleted your account. We're sad to see you go!".</li>
+    </ol>
+    <h2 class="text-center">Can I cancel my account deletion?</h2>
+    <p>No, all account deletions are final.</p>
+{% endblock %}

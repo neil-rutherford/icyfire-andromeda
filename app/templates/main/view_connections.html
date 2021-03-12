@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="text-center">{{ username }}</h1>
+    <hr>
+    <div class="col-sm-8 mx-auto">
+        <ul class="nav nav-tabs nav-fill">
+            <li class="nav-item">
+            {% if connection_type == "followers" %}
+                <a class="nav-link active" href="{{ url_for('main.view_followers', username=username) }}">Followers</a>
+            {% else %}
+                <a class="nav-link" href="{{ url_for('main.view_followers', username=username) }}">Followers</a>
+            {% endif %}
+            </li>
+            <li class="nav-item">
+            {% if connection_type == "following" %}
+                <a class="nav-link active" href="{{ url_for('main.view_following', username=username) }}">Following</a>
+            {% else %}
+                <a class="nav-link" href="{{ url_for('main.view_following', username=username) }}">Following</a>
+            {% endif %}
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-8 mx-auto">
+        <div id="scroller" class="mb-3">
+            <template id="connection-template">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-2 align-self-center">
+                                <img id="card-image" src="" width="50%" height="auto" class="rounded-circle" alt="Profile picture">
+                            </div>
+                            <div class="col-sm-8">
+                                <h5 id="card-username">Username <span class="badge bg-dark">PATRIOT</span></h5>
+                                <p id="card-status" class="text-muted">Status</p>
+                            </div>
+                        </div>
+                        <a id="card-link" href="" class="stretched-link"></a>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div id="sentinel" class="d-flex justify-content mb-3">
+            <div class="spinner-border" role="status"></div>
+        </div>
+    </div>
+
+    <script>
+        var scroller = document.querySelector('#scroller');
+        var template = document.querySelector('#connection-template');
+        var sentinel = document.querySelector('#sentinel');
+        var counter = 0;
+        var connection_type = "{{ connection_type }}";
+        var username = "{{ username }}";
+
+        function loadItems() {
+            fetch(`/_api/load/connections/type=${connection_type}&user=${username}?counter=${counter}`).then((response) => {
+                response.json().then((data) => {
+
+                    if (!data.length) {
+                        sentinel.innerHTML = "You've reached the end!";
+                    }
+
+                    for (var i = 0; i < data.length; i++) {
+                        let template_clone = template.content.cloneNode(true);
+                        template_clone.querySelector('#card-image').src = `${data[i][0]}`;
+                        if (data[i][2] == true) {
+                            template_clone.querySelector('#card-username').innerHTML = `${data[i][1]} <span class="badge bg-dark">PATRIOT</span>`;
+                        } else {
+                            template_clone.querySelector('#card-username').innerHTML = `${data[i][1]}`;
+                        }
+                        var status = `${data[i][3]}`;
+                        if (status.length > 50) {
+                            template_clone.querySelector('#card-status').innerHTML = status.substring(0, 50) + '...';
+                        } else {
+                            template_clone.querySelector('#card-status').innerHTML = status;
+                        }
+                        template_clone.querySelector('#card-link').href = `${data[i][4]}`;
+
+                        scroller.appendChild(template_clone);
+                        counter += 1;
+                        
+                    }
+                })
+            })
+        }
+
+        var intersectionObserver = new IntersectionObserver(entries => {
+            // If intersectionRatio is 0, the sentinel is out of view and we don't need to do anything.
+            if (entries[0].intersectionRatio <= 0) {
+                return;
+            }
+            loadItems();
+        });
+        intersectionObserver.observe(sentinel);
+    </script>
+{% endblock %}

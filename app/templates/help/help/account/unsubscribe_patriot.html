@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Unsubscribe from Patriot Tier</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Unsubscribe from Patriot Tier</h1>
+    <p>You are free to unsubscribe from a Patriot Tier subscription at any time for any reason.</p>
+    <h2 class="text-center">What happens when I unsubscribe?</h2>
+    <ul>
+        <li>Your custom profile picture will be replaced with an anonymous avatar.</li>
+        <li>Your status will be blank.</li>
+        <li>You will lose your <span class="badge bg-dark">PATRIOT</span> badge.</li>
+        <li>You will lose your ad-free experience.</li>
+        <li>You will still earn coins from articles that you wrote.</li>
+    </ul>
+    <h2 class="text-center">How do I unsubscribe from Patriot Tier?</h2>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>Scroll down to the "You're a Patriot!" subsection of the "Manage your account" section. Click the <a href="{{ url_for('payment.cancel_patriot_tier') }}" onclick="return confirm('This action will cancel your current Patriot Tier subscription. Are you sure you want to continue?');"><button type="button" class="btn btn-secondary">Cancel Subscription</button></a> button.</li>
+    </ol>
+    <p>If your unsubscription was successful, you will see a message saying "Your Patriot Tier subscription has been cancelled.".</p>
+
+{% endblock %}

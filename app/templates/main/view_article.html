@@ -1,0 +1,160 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <meta name="description" content="{{ article.description }}" />
+    <meta itemprop="name" content="{{ article.title }}">
+    <meta itemprop="description" content="{{ article.description }}">
+    <meta itemprop="image" content="{{ article.image_file_path }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ article.title }}">
+    <meta name="twitter:description" content="{{ article.description }}">
+    <meta name="twitter:image:src" content="{{ article.image_file_path }}">
+
+    <meta property="og:title" content="{{ article.title }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ url_for('main.view_article', slug=article.slug, _external=True) }}" />
+    <meta property="og:image" content="{{ article.image_file_path }}" />
+    <meta property="og:description" content="{{ article.description }}" />
+    <meta property="og:site_name" content="Galatea News" />
+    <meta property="article:published_time" content="{{ article.timestamp }}" />
+    <meta property="article:modified_time" content="{{ article.timestamp }}" />
+    <meta property="article:author" content="{{ article.author.username }}" />
+    <meta property="article:section" content="{{ section }}" />
+    <meta property="article:tag" content="{{ article.tags }}" />
+
+    <style>
+        .fa {
+            padding: 20px;
+            font-size: 30px;
+            width: 75%;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+            }
+
+            .fa:hover {
+                opacity: 0.7;
+            }
+
+            .fa-facebook {
+            background: #3B5998;
+            color: white;
+            }
+
+            .fa-twitter {
+            background: #55ACEE;
+            color: white;
+            }
+
+            .fa-linkedin {
+            background: #007bb5;
+            color: white;
+            }
+
+            .fa-tumblr {
+            background: #2c4762;
+            color: white;
+            }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section id="header">
+        <small class="text-muted">{{ moment(article.timestamp).format('LL') }} - {{ section }}</small>
+        <h1 class="display-1 text-center">{{ article.title }}</h1>
+        <p class="lead text-center">{{ article.description }}</p>
+        <div class="col-sm-3 mx-auto">
+            <div class="row">
+                <div class="col-sm-1">
+                    <a href="{{ url_for('main.view_user', username=article.author.username) }}"><img class="rounded-circle" src="{{ article.author.profile_pic }}" width="500%" height="auto"></a>
+                </div>
+                <div class="col">
+                    <a href="{{ url_for('main.view_user', username=article.author.username) }}" class="text-dark" style="text-decoration:none;"><h5>{{ article.author.username }} {% if article.author.check_subscription() %}<span class="badge bg-dark">PATRIOT</span>{% endif %}</h5></a>
+                </div>
+            </div>
+        </div>
+        <br>
+    </section>
+    
+    <section id="image">
+        <div class="text-center">
+            <img src="{{ article.image_file_path }}" class="img-thumbnail" width="50%" height="auto">
+        </div>
+        <br>
+    </section>
+
+    <section id="body">
+        <p style="white-space: pre-line;">{{ article.body }}</p>
+        <br><br>
+        <small class="text-muted">The views expressed in this piece do not necessarily reflect the views of other Galatea contributors or of Galatea News itself. Please see our <a href="{{ url_for('help.disclaimers') }}">disclaimers page</a> for more information.</small>
+    </section>
+    
+    <div class="col-sm-9 mx-auto">
+    
+    <hr>
+    <section id="share-section">
+        <h4 class="text-center">Share on social media</h4>
+        <div class="row">
+            <div class="col-sm text-center">
+                Share on Facebook
+                <a class="fa fa-facebook" href="{{ url_for('analytics.share_facebook', article_id=article.id) }}" target="_blank"></a>
+            </div>
+            <div class="col-sm text-center">
+                Share on Twitter
+                <a class="fa fa-twitter" href="{{ url_for('analytics.share_twitter', article_id=article.id) }}" target="_blank"></a>
+            </div>
+            <div class="col-sm text-center">
+                Share on Tumblr
+                <a class="fa fa-tumblr" href="{{ url_for('analytics.share_tumblr', article_id=article.id) }}" target="_blank"></a>
+            </div>
+            <div class="col-sm text-center">
+                Share on LinkedIn
+                <a class="fa fa-linkedin" href="{{ url_for('analytics.share_linkedin', article_id=article.id) }}" target="_blank"></a>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section id="comment-form">
+    <h4 class="text-center">Comments</h4>
+        <form action="" method="post" novalidate>
+            {% if current_user.is_authenticated %}
+            <div class="mb-3">
+                <textarea class="form-control" id="comment" name="comment" rows="1" placeholder="What do you think?"></textarea><br/>
+                <div class="text-center">
+                <button type="submit" class="btn btn-primary mb-3" style="width:45%;">Post Comment</button></a>
+                </div>
+            </div>
+            {% else %}
+            <div class="mb-3">
+                <textarea class="form-control" id="comment" name="comment" rows="1" placeholder="You must be logged in to leave a comment." readonly></textarea><br/>
+                <div class="text-center">
+                <a href="{{ url_for('auth.login') }}"><button class="btn btn-warning mb-3" style="width:45%;">Go To Log In</button></a>
+                </div>
+            </div>
+            {% endif %}
+            
+        </form>
+    </section>
+    <section id="comments">
+    {% for comment in comments %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <a href="{{ url_for('main.view_user', username=comment.author.username) }}"><img class="rounded-circle" src="{{ comment.author.profile_pic }}" width="50%" height="auto"></a>
+                    </div>
+                    <div class="col-sm-8">
+                        <a href="{{ url_for('main.view_user', username=comment.author.username) }}" class="text-dark" style="text-decoration:none;"><h5>{{ comment.author.username }} {% if comment.author.check_subscription() %}<span class="badge bg-dark">PATRIOT</span>{% endif %}</h5></a>
+                        <p>{{ comment.comment }}</p>
+                    </div>
+                    <div class="col-sm-2">
+                        <small class="text-muted">{{ moment(comment.timestamp).format('LLL') }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </section>
+    </div>
+{% endblock %}

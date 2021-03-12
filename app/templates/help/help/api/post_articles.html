@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Publish an article</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Publish an article</h1>
+    <p>Publishes an article to Galatea. Requires the linked user account to be subscribed to Patriot Tier.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/post/articles</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET],
+                'image_file_path': Cover image (as a URL string),
+                'title': Article title (str, max 100 characters),
+                'description': Article description / hook (str, max 200 characters),
+                'section': Section (int, 1: Politics, 2: World, 3: Technology, 4: Energy/Environment, 5: Economy/Business, 6: Science/Religion, 7: Health),
+                'tags': Tags as a comma-delimited list (", "),
+                'body': Article text (text)
+            }</code></td>
+        </tr>
+        <tr>
+            <td>Example POST input</td>
+            <td><code>
+            {
+                'consumer_key': "c0n5um3r_k3y",
+                'consumer_secret': "c0n5um3r_53cr37",
+                'image_file_path': "https://bit.ly/37OntOw",
+                'title': "How the California wildfires began",
+                'description': "Evidence shows that it wasn't a gender reveal party, as once claimed.",
+                'section': 4,
+                'tags': "wildfire, california, westcoast, newsom",
+                'body': "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor..."
+            }
+            </code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>201 status code</li>
+            <li>JSON object</li>
+            <li><code>
+            {
+                'status': 201,
+                'response': "SUCCESS: Article [YOUR_ARTICLE'S_SLUG] created.
+            }
+            </code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>400: Some sort of error occurred when creating the article object.</li>
+                    <li>403 (Account does not have adequate permissions): Linked user account is not subscribed to Patriot Tier, and can therefore not publish articles.</li>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

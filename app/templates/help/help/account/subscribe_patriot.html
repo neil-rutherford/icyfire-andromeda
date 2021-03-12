@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Subscribe to Patriot Tier</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Subscribe to Patriot Tier</h1>
+    <p>Subscribing to Patriot Tier can significantly enhance your Galatea experience. For just $5/month, you can get rid of ads, customize your profile, and write articles.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('auth.settings') }}"><button class="btn btn-outline-secondary">Account Settings</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>Scroll down to the "Upgrade to Patriot Tier" subsection of the "Manage your account" section. Click the green <a href="{{ url_for('payment.buy_patriot_tier') }}"><button type="button" class="btn btn-success">Upgrade Now</button></a> button. This will take you to the Membership Pricing page.</li>
+        <li>On the Membership Pricing page, click the green <button class="btn btn-success">Get started</button> button.</li>
+        <li>Enter your payment details, then click on the blue <button class="btn btn-primary">Pay $5.00</button> button.</li>
+    </ol>
+    <p>If your subscription was successful, you will be redirected back to the "Account Settings" page with a message saying "Thank you for your business!". Payments will be automatically collected monthly.</p>
+{% endblock %}

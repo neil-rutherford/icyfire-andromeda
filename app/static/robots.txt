@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /_api/
+Disallow: /_analytics/
+Disallow: /_payment/
+Sitemap: .../sitemap.xml

@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Send a message</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Send a message</h1>
+    <p>Sends a message.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/post/messages</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET],
+                'reply_to': Message primary key (int) if this is a reply, else None,
+                'to_user_id': Recipient user ID (int),
+                'subject': Subject line (str, 50 character max),
+                'body': Message body (str, 300 character max)
+            }</code></td>
+        </tr>
+        <tr>
+            <td>Example POST input</td>
+            <td><code>
+            {
+                'consumer_key': "c0n5um3r_k3y",
+                'consumer_secret': "c0n5um3r_53cr37",
+                'reply_to': null,
+                'to_user_id': 420,
+                'subject': 'Lunch at Olive Garden?',
+                'body': "Hey,\n Wanna grab lunch today at the Olive Garden down the street?"
+            }
+            </code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>201 status code</li>
+            <li>JSON object</li>
+            <li><code>
+            {
+                'status': 201,
+                'response': "SUCCESS: Message sent to [TO_USER_ID]."
+            }
+            </code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>400: Some sort of error occurred when creating the message object.</li>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

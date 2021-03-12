@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row bg-light">
+        <h3 class="text-center">{{ message.subject }}</h3>
+        {% if message.sender %}
+        <div class="col">
+            <img src="{{ message.sender.profile_pic }}" class="rounded-circle" alt="{{ message.sender.username }}'s profile picture" width="25%" height="auto">
+        </div>
+        <div class="col-sm-7">
+            <h5>{{ message.sender.username }} {% if message.sender.check_subscription() %}<span class="badge bg-dark">PATRIOT</span>{% endif %}</h5>
+            <p>to me</p>
+        </div>
+        {% else %}
+        <div class="col-sm-7">
+            <h5><span class="badge bg-dark">GALATEA STAFF</span></h5>
+            <p>to me</p>
+        </div>
+        {% endif %}
+        <div class="col">
+            <small class="text-muted">{{ moment(message.sent_timestamp).format('LLL') }}</small>
+        </div>
+    </div>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            {% if previous_message %}
+            <p class="text-black-50">{{ previous_message.body }}</p>
+            <hr>
+            {% endif %}
+            <p>{{ message.body }}</p>
+        </div>
+    </div>
+    <hr>
+    {% if message.sender %}
+    <h4 class="text-center">Reply to {{ message.sender.username }}</h4>
+    <form action="" method="post" novalidate>
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" class="form-control" name="subject" id="subject" value="Re: {{ message.subject }}!" maxlength="50">
+        <br>
+        <label for="body" class="form-label">Message body</label>
+        <textarea class="form-control" name="body" id="body" rows="3" placeholder="Your text here" maxlength="300"></textarea>
+        <br>
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary text-center" style="width:45%;">Send Reply</button>
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}

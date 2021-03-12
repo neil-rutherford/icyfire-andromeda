@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <script>
+    function broadcastValue(inputID, outputID) {
+      var x = document.getElementById(inputID);
+      document.getElementById(outputID).innerHTML = x.value;
+    }
+
+    function changeSection() {
+      if (document.aform.section.value == '1') {
+        document.getElementById("card-section").innerHTML = "U.S. POLITICS";
+      } else if (document.aform.section.value == '2') {
+        document.getElementById("card-section").innerHTML = "WORLD NEWS";
+      } else if (document.aform.section.value == '3') {
+        document.getElementById("card-section").innerHTML = "TECHNOLOGY";
+      } else if (document.aform.section.value == '4') {
+        document.getElementById("card-section").innerHTML = "ENERGY / ENVIRONMENT";
+      } else if (document.aform.section.value == '5') {
+        document.getElementById("card-section").innerHTML = "ECONOMY / BUSINESS";
+      } else if (document.aform.section.value == '6') {
+        document.getElementById("card-section").innerHTML = "SCIENCE / RELIGION";
+      } else if (document.aform.section.value == "7") {
+        document.getElementById("card-section").innerHTML = "HEALTH";
+      } else {
+        document.getElementById("card-section").innerHTML = "SECTION";
+      }
+    }
+
+    function changeImage() {
+      var x = document.getElementById("image_file_path");
+      document.getElementById("card-image").src=x.value;
+    }
+
+    function getTags() {
+      var tags_string = document.getElementById("tags").value;
+      var tags_list = String(tags_string).split(", ");
+      
+      var text = "";
+      var i;
+      for (i = 0; i < tags_list.length; i++) {
+        text += "<span class='badge bg-secondary'>" + tags_list[i] + "</span> ";
+      }
+      document.getElementById("card-tags").innerHTML = text;
+    }
+  </script>
+{% endblock %}
+
+{% block content %}
+  <h1 class="display text-center">Customize your article</h1>
+  <h3 class="display text-center">Decide how it looks on the front page.</h3>
+  
+  <div class="sticky-top">
+  <hr>
+  <p class="text-center">PREVIEW</p>
+  <div class="card bg-light mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img id="card-image" src="" class="card-img" alt="Cover image goes here.">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <p id="card-section">SECTION</p>
+          <h3 id="card-title" class="card-title">Article Title</h3>
+          
+          <p id="card-description" class="card-text">This is where the description / hook goes.</p>
+          <div id="card-tags">
+            <span class="badge bg-secondary">Tags</span> <span class="badge bg-secondary">Go</span> <span class="badge bg-secondary">Here</span>
+          </div>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+  <hr>
+  
+  <form name="aform" action="{{ url_for('main.customize_article') }}" method="post">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" onkeyup="broadcastValue('title', 'card-title')" id="title" name="title" class="form-control form-control-lg" placeholder="Article title" maxlength="70" aria-describedby="titleHelpBlock" required>
+    <div id="titleHelpBlock" class="form-text">
+      Article title. Maximum length of 70 characters.
+    </div>
+    <br>
+    <label for="description" class="form-label">Description</label>
+    <textarea id="description" name="description" onkeyup="broadcastValue('description', 'card-description')" class="form-control form-control-lg" placeholder="Article description" maxlength="155" aria-describedby="descriptionHelpBlock" required></textarea>
+    <div id="descriptionHelpBlock" class="form-text">
+      A hook or brief description to engage the reader and get them to read on. Maximum length of 155 characters.
+    </div>
+    <br>
+    <label for="section" class="form-label">Section</label>
+    <select id="section" name="section" class="form-select form-select-lg mb-3" aria-describedby="sectionHelpBlock" onchange="changeSection()" required>
+      <option value="" selected>Choose a section</option>
+      <option value="1">U.S. Politics</option>
+      <option value="2">World News</option>
+      <option value="3">Technology</option>
+      <option value="4">Energy / Environment</option>
+      <option value="5">Economy / Business</option>
+      <option value="6">Science / Religion</option>
+      <option value="7">Health</option>
+    </select>
+    <div id="sectionHelpBlock" class="form-text">
+      What subject is your article about? What section would it fit best?
+    </div>
+    <br>
+    <label for="tags" class="form-label">Tags</label>
+    <input type="text" name="tags" id="tags" class="form-control form-control-lg" placeholder="Tags, in a comma-separated list" maxlength="300" aria-describedby="tagsHelpBlock" onkeyup="getTags()" required>
+    <div id="tagsHelpBlock" class="form-text">
+      A list of key words so that folks can find your article more easily. Separate each tag with a comma and a space, like so: "biden, trump, election".
+    </div>
+    <br>
+    <label for="image_file_path" class="form-label">Cover image URL</label>
+    <input type="text" name="image_file_path" id="image_file_path" class="form-control form-control-lg" placeholder="Cover image URL" maxlength="250" aria-describedby="coverImageHelpBlock" onkeyup="changeImage()" required>
+    <div id="coverImageHelpBlock" class="form-text">
+      Online address (URL) of the cover image you would like to use. For example: <a href="https://rb.gy/vkliw2">https://rb.gy/vkliw2</a>
+    </div>
+    <br>
+    <div class="text-center">
+    <button type="submit" class="btn btn-primary btn-lg text-center" style="width:45%;">Next >></button>
+    </div>
+</form>
+{% endblock %}

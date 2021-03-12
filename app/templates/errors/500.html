@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="page-wrap d-flex flex-row align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12 text-center">
+                    <span class="display-1 d-block">An unexpected error has occurred</span>
+                    <div class="mb-4 lead">The administrator has been notified. Sorry for the inconvenience!</div>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-link">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h1 class="display text-center">Write your article</h1>
+  <h3 class="display text-center">Now for the content!</h3>
+  <hr>
+
+    <p class="text-center">PREVIEW</p>
+  <div class="card bg-light mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img id="card-image" src="{{ article.image_file_path }}" class="card-img" alt="Cover image goes here.">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+        {% if article.section == 1 %}
+            <p id="card-section">U.S. POLITICS</p>
+        {% elif article.section == 2 %}
+            <p id="card-section">WORLD NEWS</p>
+        {% elif article.section == 3 %}
+            <p id="card-section">TECHNOLOGY</p>
+        {% elif article.section == 4 %}
+            <p id="card-section">ENERGY / ENVIRONMENT</p>
+        {% elif article.section == 5 %}
+            <p id="card-section">ECONOMY / BUSINESS</p>
+        {% elif article.section == 6 %}
+            <p id="card-section">SCIENCE / RELIGION</p>
+        {% elif article.section == 7 %}
+            <p id="card-section">HEALTH</p>
+        {% else %}
+            <p id="card-section">SECTION</p>
+        {% endif %}
+          <h3 id="card-title" class="card-title">{{ article.title }}</h3>
+          <p id="card-description" class="card-text">{{ article.description }}</p>
+          <div id="card-tags">
+          {% set tag_list = article.tags.split(', ') %}
+          {% for tag in tag_list %}
+            <span class="badge bg-secondary">{{ tag }}</span> 
+          {% endfor %}
+          </div>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <form action="" method="post" novalidate>
+
+    <textarea class="form-control" rows="20" name="body" placeholder="What's on your mind?"></textarea><br/>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary text-center" style="width:45%;">Publish Article</button>
+    </div>
+  </form>
+{% endblock %}

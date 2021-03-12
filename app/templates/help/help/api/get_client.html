@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Get more information about an app</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Get more information about an app</h1>
+    <p>Returns information about a given app. Takes <code>api_client_id</code> (App primary key, as an integer) as an argument.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/get/client/[API_CLIENT_ID]</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET]
+            }</code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>200 status code</li>
+            <li>JSON object</li>
+            <li><code>{
+                    'id': Primary key (int),
+                    'user_id': User ID to be linked to the app (int),
+                    'is_approved': Has the app been approved? (bool),
+                    'is_blacklist': Is the app on a blacklist? (bool),
+                    'expires_on': When does the app's Premium API subscription expire, in UTC? (datetime),
+                    'is_articles': Applying for articles permission? (bool),
+                    'is_comments': Applying for comments permission? (bool),
+                    'is_logs': Applying for logs permission? (bool),
+                    'is_shares': Applying for shares permission? (bool),
+                    'is_users': Applying for users permission? (bool),
+                    'is_connections': Applying for connections permission? (bool),
+                    'is_messages': Applying for messages permission? (bool),
+                    'is_api': Applying for API permission? (bool),
+                    'company_name': Company name if applicable, else "Individual" (str),
+                    'contact_name': Point of contact for this application (Surname, Given) (str),
+                    'phone_number': +1 country code phone number (str),
+                    'email': Contact email for this application (str),
+                    'use_case': How do you plan to use the Galatea API? (str),
+                    'developer_platform': What platform are you developing this app on? (str),
+                    'monetization_model': How do you plan to monetize this app, if applicable, else "N/A" (str),
+                    'permission_justification': Explain why your app needs the permissions you requested (str)
+            }</code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Example response</td>
+            <td><code>{
+                'id': 3,
+                'user_id': 42,
+                'is_approved': false,
+                'is_blacklist': false,
+                'expires_on': 1970-01-01T00:00:00.000000Z,
+                'is_articles': false,
+                'is_comments': true,
+                'is_logs': false,
+                'is_shares': false,
+                'is_users': false,
+                'is_connections': false,
+                'is_messages': true,
+                'is_api': false,
+                'company_name': "Individual",
+                'contact_name': 'Dixon-Coffey, Duncan',
+                'phone_number': '(123) 456-7890',
+                'email': 'dixcof@gmail.com',
+                'use_case': 'I want to send someone a message if they comment on one of my articles.',
+                'developer_platform': 'Python script running on AWS',
+                'monetization_model': 'N/A',
+                'permission_justification': 'Comments permission to get author of the comment\nMessages permission to send them a message.'
+            }</code></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>404: Client not found.</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

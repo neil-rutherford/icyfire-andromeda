@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item active">Functionality</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Help - Functionality</h1>
+    
+    <hr>
+
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Adding to the conversation</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='write_article') }}">Write an article</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='comment_article') }}">Comment on an article</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Coins</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='gift_coins') }}">Send coins to friends</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='redeem_coins') }}">Redeem coins for Patriot Tier subscription</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Connecting with other users</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='follow_user') }}">Follow a user</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='unfollow_user') }}">Unfollow a user</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='send_message') }}">Send a message</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='functionality', title='inbox') }}">Check my inbox</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

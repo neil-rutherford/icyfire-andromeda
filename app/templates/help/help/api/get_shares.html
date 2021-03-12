@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Get a list of shares</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Get a list of shares</h1>
+    <p>Returns a list of shares for a given article. Takes <code>article_id</code> (article primary key, as an integer) as an argument.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/get/shares/[ARTICLE_ID]</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET]
+            }</code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>200 status code</li>
+            <li>JSON array of objects</li>
+            <li><code>
+            [
+                {
+                    'id': Primary key (int),
+                    'share_uuid': Share UUID (str),
+                    'article_id': Article primary key (int),
+                    'timestamp': UTC timestamp (datetime)
+                },
+                {
+                    ...
+                }
+            ]
+            </code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Example response</td>
+            <td><code>[{
+                'id': 1,
+                'share_uuid': '0c297f75-3800-4ed3-b39f-df4c97ec8a4b',
+                'article_id': 5,
+                'timestamp': 2021-02-26T00:56:12.1263485Z
+            },
+            {
+                'id': 2,
+                'share_uuid': '9f8eeef7-89aa-4705-ace7-0f489d9e3d3f',
+                'article_id': 5,
+                'timestamp': 2021-02-26T04:56:12.143485Z
+            }]</code></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>404: Article not found.</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

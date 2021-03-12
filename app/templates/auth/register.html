@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="max-width:700px;">
+        <h1 class="display-4">Register</h1>
+        <p class="lead">Become a member today and get the full Galatea experience.</p>
+    </div>
+    <hr>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="text-center bg-light text-dark rounded">
+            <h5 class="text-center">Login Credentials</h5>
+            <div class="form-group">
+                {{ form.email.label }}<span style="color:red;">*</span><br>
+                {{ form.email(_class="form-control form-control-lg") }}<br>
+                {% for error in form.email.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.password.label }}<span style="color:red;">*</span><br>
+                {{ form.password(_class="form-control form-control-lg") }}<br>
+                {% for error in form.password.errors %}
+                    <span style="color:red;">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.verify_password.label }}<span style="color:red;">*</span><br>
+                {{ form.verify_password(_class="form-control form-control-lg") }}<br>
+                {% for error in form.verify_password.errors %}
+                    <span style="color:red;">{{ error }}</span><br>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
+        <br>
+        <div class="text-center bg-light text-dark rounded">
+            <h5 class="text-center">About You</h5>
+            <div class="form-group">
+                {{ form.username.label }}<span style="color:red;">*</span><br>
+                {{ form.username(_class="form-control form-control-lg") }}<br>
+                {% for error in form.username.errors %}
+                    <span style="color:red;">{{ error }}</span>
+                {% endfor %}
+                <small class="form-text text-muted">Your user name represents you on this site while preserving your anonymity. It must be unique and less than 100 characters long.</small>
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.yob.label }}<span style="color:red;">*</span><br>
+                {{ form.yob(_class="form-control form-control-lg") }}<br>
+                {% for error in form.yob.errors %}
+                    <span style="color:red;">{{ error }}</span>
+                {% endfor %}
+                <small class="form-text text-muted">We use this to make sure you're old enough to use the site.</small>
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.gender.label }}<span style="color:red;">*</span><br>
+                {{ form.gender(_class="form-control form-control-lg") }}<br>
+                {% for error in form.gender.errors %}
+                    <span style="color:red;">{{ error }}</span>
+                {% endfor %}
+                <small class="form-text text-muted">We use this to show you more relevant content.</small>
+            </div>
+            <br>
+        </div>
+        <br>
+        <div class="text-center">
+            {{ form.submit() }}<br>
+            <small class="form-text text-muted">By clicking this button, you agree to our <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookie Policy</a>.</small>
+        </div>
+    </form>
+{% endblock %}

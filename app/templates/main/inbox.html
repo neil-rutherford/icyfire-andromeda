@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="text-center">Inbox ({{ current_user.unread_message_count() }})</h1>
+    <hr>
+    <h4 class="text-center">Unread messages</h4>
+    {% for message in unread_messages %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-2"><b>{{ message.sender.username }}</b></div>
+                    <div class="col-sm-8"><b>{{ message.subject }}</b> - <small class="text-muted">{{ message.body|truncate(20, True) }}</small></div>
+                    <div class="col-sm-2"><b>{{ moment(message.sent_timestamp).format('lll') }}</b></div>
+                </div>
+                <a href="{{ url_for('main.view_message', message_id=message.id) }}" class="stretched-link"></a>
+            </div>
+        </div>
+    {% endfor %}
+    
+    <br>
+    <hr>
+    <h4 class="text-center">Read messages</h4>
+    {% for message in read_messages %}
+        <div class="card">
+            <div class="card-body bg-light">
+                <div class="row">
+                    <div class="col-sm-2">{{ message.sender.username }}</div>
+                    <div class="col-sm-8">{{ message.subject }} - <small class="text-muted">{{ message.body|truncate(20, True) }}</small></div>
+                    <div class="col-sm-2">{{ moment(message.sent_timestamp).format('lll') }}</div>
+                </div>
+                <a href="{{ url_for('main.view_message', message_id=message.id) }}" class="stretched-link"></a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

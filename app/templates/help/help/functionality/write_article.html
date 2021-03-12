@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Write an article</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Write an article</h1>
+    <p>Users who have an active Patriot Tier subscription can write articles. This is a great way to share your thoughts and contribute to the discussion. Please be mindful of our <a href="{{ url_for('help.content_policy') }}">Content Policy</a>.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a> to an acocunt with an <a href="{{ url_for('help.help_title', topic='account', title='subscribe_patriot') }}">active Patriot subscription</a>, if you haven't already.</li>
+        <li>Click the blue <a href="{{ url_for('main.customize_article') }}"><button class="btn btn-outline-primary">Write an Article</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>The process is divided into two parts -- deciding how the article will look, and writing the body of the article.</li>
+        <li>Part 1: Deciding how the article will look
+        <ul>
+            <li>As you fill in the fields, a preview will become visible on the top of the page. This is how your article will look on the main page.</li>
+            <li>Adjust the fields until you are satisfied with the preview.</li>
+            <li>When you are finished, click the blue <button class="btn btn-primary">Next >></button> button at the bottom of the page.</li>
+        </ul></li>
+        <li>Part 2: Writing the article
+        <ul>
+            <li>You will see the preview from Part 1 above the article. This is for your reference only.</li>
+            <li>Write your article in the text box with the placeholder <small class="text-muted">What's on your mind?</small>.</li>
+            <li>When you are finished, click the blue <button class="btn btn-primary">Publish Article</button> button at the bottom of the page.</li>
+        </ul></li>
+    </ol>
+    <p>After your article has successfully been published, you will be redirected to the article. You will see a message that says "Your article is now live!".</p>
+    <p>As the community interacts with your article, you will earn coins. Coins can be <a href="{{ url_for('help.help_title', topic='functionality', title='redeem_coins') }}">redeemed for Patriot subscription time</a> or <a href="{{ url_for('help.help_title', topic='functionality', title='gift_coins') }}">gifted to other users</a>.</p>
+
+{% endblock %}

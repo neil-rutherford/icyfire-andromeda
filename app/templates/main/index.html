@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <meta name="description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking." />
+  <meta itemprop="name" content="{{ title }}">
+  <meta itemprop="description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking.">
+  <meta itemprop="image" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking.">
+  <meta name="twitter:image:src" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg">
+
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg" />
+  <meta property="og:description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking." />
+  <meta property="og:site_name" content="Galatea News" />
+
+  <style>
+  header {
+    position: relative;
+    background-color: black;
+    height: 50vh;
+    min-height: 25rem;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  header .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  header .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 1;
+  }
+
+  @media (pointer: coarse) and (hover: none) {
+    header {
+      background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+    }
+    header video {
+      display: none;
+    }
+  }
+  </style>
+{% endblock %}
+
+{% block banner %}
+  <header>
+    <div class="overlay"></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted">
+      <source src="{{ url_for('static', filename=banner[2]) }}" type="video/mp4">
+    </video>
+    <div class="container h-100">
+      <div class="d-flex h-100 text-center align-items-center">
+        <div class="w-100 text-white">
+          <h1 class="display-3">{{ banner[0] }}</h1>
+          <p class="lead mb-0">{{ banner[1] }}</p>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+    <div id="scroller" class="mb-3">
+
+        <template id="article-template">
+            <div class="card mb-3 bg-light animated fadeIn shadow-sm">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img id="card-image" src="" class="card-img" alt="Cover image goes here.">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p id="card-section">SECTION</p>
+                            <h3 id="card-title" class="card-title">Article Title</h3>
+                            <p id="card-description" class="card-text">This is where the description / hook goes.</p>
+                            <div id="card-tags">
+                                <span class="badge bg-secondary">Tags</span> <span class="badge bg-secondary">Go</span> <span class="badge bg-secondary">Here</span>
+                            </div>
+                            <p class="card-text"><small id="card-timestamp" class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                    <a id="card-link" href="" class="stretched-link"></a>
+                </div>
+            </div>
+        </template>
+
+    </div>
+
+    <div id="sentinel" class="d-flex justify-content-center mb-3">
+        <div class="spinner-border" role="status"></div>
+    </div>
+
+    <script>
+
+      var scroller = document.querySelector('#scroller');
+      var template = document.querySelector('#article-template');
+      var sentinel = document.querySelector('#sentinel');
+      var counter = 0;
+      var section = "{{ section }}";
+
+      function loadItems() {
+          fetch(`/_api/load/articles/${section}?counter=${counter}`).then((response) => {
+              response.json().then((data) => {
+
+                  if (!data.length) {
+                      sentinel.innerHTML = "You've reached the end!";
+                  }
+
+                  for (var i = 0; i < data.length; i++) {
+                      let template_clone = template.content.cloneNode(true);
+                      template_clone.querySelector('#card-image').src = `${data[i][0]}`;
+                      template_clone.querySelector('#card-section').innerHTML = `${data[i][1]}`;
+                      template_clone.querySelector('#card-title').innerHTML = `${data[i][2]}`;
+                      template_clone.querySelector('#card-description').innerHTML = `${data[i][3]}`;
+                      
+                      var tags_string = `${data[i][4]}`;
+                      var tags_list = String(tags_string).split(", ");
+                      var text = "";
+                      for (x = 0; x < tags_list.length; x++) {
+                          text += "<span class='badge bg-secondary'>" + tags_list[x] + "</span> ";
+                      }
+                      template_clone.querySelector('#card-tags').innerHTML = text;
+
+                      var relative_time = moment(`${data[i][5]}`, 'YYYY-MM-DD hh:mm:ss').fromNow();
+                      template_clone.querySelector('#card-timestamp').innerHTML = `Last updated ${relative_time}`;
+
+                      template_clone.querySelector('#card-link').href = `${data[i][6]}`;
+
+                      scroller.appendChild(template_clone);
+                      counter += 1;
+                      
+                  }
+              })
+          })
+      }
+
+      var intersectionObserver = new IntersectionObserver(entries => {
+          // If intersectionRatio is 0, the sentinel is out of view and we don't need to do anything.
+          if (entries[0].intersectionRatio <= 0) {
+              return;
+          }
+          loadItems();
+      });
+      intersectionObserver.observe(sentinel);
+  </script>
+{% endblock %}

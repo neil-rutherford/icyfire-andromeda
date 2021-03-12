@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Check my inbox</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Check my inbox</h1>
+    <p>You can see messages other users have sent you by visiting your inbox.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Click the <a href="{{ url_for('main.inbox') }}"><button class="btn btn-outline-secondary">Inbox</button></a> link in the top-right corner of the navigation bar.</li>
+        <li>Click on messages in your inbox to open them. Unread messages are shown in white, while read messages are shown in light grey.</li>
+    </ol>
+{% endblock %}

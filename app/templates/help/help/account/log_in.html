@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Log in</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Log in</h1>
+    <p>You need to be logged in to do certain things on Galatea, such as commenting on articles as well as interacting with other users. If you have a <a href="{{ url_for('help.help_title', topic='account', title='subscribe_patriot') }}">Patriot subscription</a>, you may want to log in to take advantage of some of the perks, like removing ads, writing articles, and the ability to customize your profile.</p>
+    <ol>
+        <li>Click the blue <a href="{{ url_for('auth.login') }}"><button class="btn btn-outline-primary"><b>Log In</b></button></a> button in the top-right corner of the navigation bar.</li>
+        <li>You will be asked for two pieces of information:</li>
+        <ul>
+            <li>The email address you used to register for your Galatea account.</li>
+            <li>Your password. If you can't remember it, <a href="{{ url_for('help.help_title', topic='account', title='reset_password') }}">learn how to reset your password here</a>.</li>
+        </ul>
+        <li>Once you have finished inputting your email address and password, click the blue <button class="btn btn-primary">Log in >></button> button at the bottom of the page.</li>
+        <li>If your email or password is incorrect, you will receive an error message that says: "ERROR: Invalid email or password." In this case, either try again (double-check to make sure you haven't made any mistakes!) or <a href="{{ url_for('help.help_title', topic='account', title='reset_password') }}">reset your password</a>.</li>
+    </ol>
+    <p>If you are redirected away from the login page, that means you are successfully logged in!</p>
+{% endblock %}

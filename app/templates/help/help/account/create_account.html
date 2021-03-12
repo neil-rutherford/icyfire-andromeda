@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='account') }}">Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create an account</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Create an account</h1>
+    <p>You need a user account to do certain things on Galatea, such as commenting on articles, following and messaging users, and receiving email notifications. Luckily, making an account is free and easy!</p>
+    <ol>
+        <li>Click the red <a href="{{ url_for('auth.register') }}"><button class="btn btn-danger"><b>Register</b></button></a> button in the top-right corner of the navigation bar.</li>
+        <li>You will be asked for five pieces of information:</li>
+        <ul>
+            <li>Your email address, so we can contact you if necessary.</li>
+            <li>A password, preferably longer than 8 characters and unique to this website.</li>
+            <li>Your username, which is your identity on this site. (Think of it like a name that preserves your anonymity.) This must be unique.</li>
+            <li>Year of birth, so we know you're old enough to use the site.</li>
+            <li>Gender, so we can show you relevant content we think you'd like.</li>
+        </ul>
+        <li>Once you have finished inputting your information, click the blue <button class="btn btn-primary">Register >></button> button at the bottom of the page.</li>
+        <li>Congratulations! You now have a Galatea account!</li>
+    </ol>
+{% endblock %}

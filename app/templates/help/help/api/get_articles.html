@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Get a list of articles</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Get a list of articles</h1>
+    <p>Returns a list of the 25 most recent articles.</p>
+    <table class="table table-striped">
+        <tr>
+            <td>Endpoint</td>
+            <td><code>/_api/get/articles</code></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td><code>POST</code></td>
+        </tr>
+        <tr>
+            <td>Form-encoded POST input</td>
+            <td><code>{
+                'consumer_key': [CONSUMER_KEY],
+                'consumer_secret': [CONSUMER_SECRET]
+            }</code></td>
+        </tr>
+        <tr>
+            <td>On success</td>
+            <td><ul>
+            <li>200 status code</li>
+            <li>JSON array of objects</li>
+            <li><code>
+            [
+                {
+                    'id': Primary key (int),
+                    'title': Article title (str),
+                    'description': Article description (str),
+                    'timestamp': UTC timestamp (datetime),
+                    'comments': Number of comments (int),
+                    'logs': Number of page views (int),
+                    'shares': Number of social media shares (int)
+                },
+                {
+                    ...
+                }
+            ]
+            </code></li>
+            </ul></td>
+        </tr>
+        <tr>
+            <td>Example response</td>
+            <td><code>[{
+                'id': 4,
+                'title': 'U.S. strikes Iran-backed militia facilities in Syria',
+                'description': 'The United States on Thursday carried out an airstrike against facilities in Syria linked to an Iran-backed militia group, the Pentagon announced.',
+                'timestamp': 2021-02-26T00:39:44.126285Z,
+                'comments': 56,
+                'logs': 4521,
+                'shares': 32
+            },
+            {
+                'id': 5,
+                'title': 'Senate parliamentarian rules $15 minimum wage cannot be included in relief package',
+                'description': 'The Senate parliamentarian ruled Thursday that the provision to increase the minimum wage to $15/hour cannot be included in the broader $1.9 trillion COVID relief package.',
+                'timestamp': 2021-02-26T00:56:12.1263485Z,
+                'comments': 12,
+                'logs': 523,
+                'shares': 43
+            }]</code></td>
+        </tr>
+        <tr>
+            <td>Error messages</td>
+            <td>
+                <ul>
+                    <li>403 (Client not found): Consumer key is incorrect.</li>
+                    <li>403 (Incorrect credentials): Consumer secret is incorrect.</li>
+                    <li>403 (API access has been restricted): Your credentials are correct, but your app is either not approved or on a blacklist.</li>
+                    <li>403 (Insufficient permissions): You don't have permission to access that resource. (e.g. Trying to access users without the "users" permission.)</li>
+                    <li>429 (Too many requests): You have exceeded your rate limit.</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

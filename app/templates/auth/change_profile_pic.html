@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="text-center">Change your profile picture</h1>
+    <hr>
+    <h3 class="text-center">Instructions</h3>
+    <p>We use <a href="https://en.gravatar.com/" target="_blank">Gravatar</a> as a third-party host for profile pictures. Please go to the <a href="https://en.gravatar.com/" target="_blank">Gravatar website</a> and create an account with your <b>{{ current_user.email }}</b> email address (the same one you used to create an account here). Follow the instructions and upload a profile picture, then refresh this page when you are finished.</p>
+    <p>You will see a preview of your profile picture below. If you are satisfied with it, click the "Change profile picture" button. If you would like to make further changes, you may do so on the Gravatar website.</p>
+    <hr>
+    <h3 class="text-center">Preview</h3>
+    <form action="" method="post" novalidate>
+    <div class="text-center">
+        <img src="{{ image_source }}" class="rounded-circle" width="20%" height="auto"><br><br>
+        <button type="submit" class="btn btn-lg btn-primary">Change profile picture</button>
+    </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item active">Account</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Help - Account</h1>
+    
+    <hr>
+
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Getting started</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='create_account') }}">Create an account</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='verify_email') }}">Verify my email</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='reset_password') }}">Reset my password</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Preferences</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='subscribe_unsubscribe') }}">Subscribe to / unsubscribe from emails</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='set_status') }}">Set my status</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='change_profile_pic') }}">Change my profile picture</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='delete_account') }}">Delete my account</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Patriot Subscription</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='subscribe_patriot') }}">Subscribe to Patriot Tier</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='account', title='unsubscribe_patriot') }}">Unsubscribe from Patriot Tier</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

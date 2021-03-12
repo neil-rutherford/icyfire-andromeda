@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="text-center">Your App</h1>
+    {% if client.is_approved is true and client.is_blacklist is false and not client.check_subscription() %}
+    <hr>
+    <h3 class="text-center">Upgrade Your API Subscription</h3>
+    <p class="lead">Take your app to the next level for only $5/month.</p>
+    <a href="{{ url_for('payment.buy_premium_api', api_client_id=client.id) }}"><button class="btn btn-lg btn-success">Upgrade to Premium API</button></a>
+    {% endif %}
+    <hr>
+    <h3 class="text-center">App Information</h3>
+    <ul class="list-group list-group-flush">
+        {% if client.is_approved is false and client.is_blacklist is false %}
+        <li class="list-group-item"><b>Status:</b> <span class="badge bg-secondary">Pending</span></li>
+        {% elif client.is_blacklist is true %}
+        <li class="list-group-item"><b>Status:</b> <span class="badge bg-danger">Blacklisted</span></li>
+        {% elif client.is_approved is true %}
+        <li class="list-group-item"><b>Status:</b> <span class="badge bg-success">Approved</span></li>
+        {% endif %}
+        <li class="list-group-item"><b>Consumer key:</b> {{ client.consumer_key }}</li>
+        <li class="list-group-item"><b>Consumer secret:</b> {{ client.consumer_secret }}</li>
+        {% if client.check_subscription() %}
+        <li class="list-group-item"><b>Rate limit:</b> <span class="badge bg-success">3,600 requests / hour</span></li>
+        {% else %}
+        <li class="list-group-item"><b>Rate limit:</b> <span class="badge bg-secondary">60 requests / hour</span></li>
+        {% endif %}
+    </ul>
+    <hr>
+    <h3 class="text-center">Contact Information</h3>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Company name:</b> {{ client.company_name }}</li>
+        <li class="list-group-item"><b>Contact name:</b> {{ client.contact_name }}</li>
+        <li class="list-group-item"><b>Phone number:</b> +1 {{ client.phone_number }}</li>
+        <li class="list-group-item"><b>Email:</b> {{ client.email }}</li>
+    </ul>
+    <hr>
+    <h3 class="text-center">Permissions</h3>
+    {% if client.is_approved is false and client.is_blacklist is false %}
+    <ul class="list-group list-group-flush">
+    {% if client.is_articles is true %}
+        <li class="list-group-item list-group-item-light"><b>Articles:</b> Requested</li>
+    {% endif %}
+    {% if client.is_comments is true %}
+        <li class="list-group-item list-group-item-light"><b>Comments:</b> Requested</li>
+    {% endif %}
+    {% if client.is_logs is true %}
+        <li class="list-group-item list-group-item-warning"><b>Logs:</b> Requested</li>
+    {% endif %}
+    {% if client.is_shares is true %}
+        <li class="list-group-item list-group-item-warning"><b>Shares:</b> Requested</li>
+    {% endif %}
+    {% if client.is_users is true %}
+        <li class="list-group-item list-group-item-light"><b>Users:</b> Requested</li>
+    {% endif %}
+    {% if client.is_connections is true %}
+        <li class="list-group-item list-group-item-warning"><b>Connections:</b> Requested</li>
+    {% endif %}
+    {% if client.is_messages is true %}
+        <li class="list-group-item list-group-item-light"><b>Messages:</b> Requested</li>
+    {% endif %}
+    {% if client.is_api is true %}
+        <li class="list-group-item list-group-item-warning"><b>API:</b> Requested</li>
+    {% endif %}
+    </ul>
+    {% else %}
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item list-group-item-light"><b>Articles:</b> {{ client.is_articles }}</li>
+        <li class="list-group-item list-group-item-light"><b>Comments:</b> {{ client.is_comments }}</li>
+        <li class="list-group-item list-group-item-warning"><b>Logs:</b> {{ client.is_logs }}</li>
+        <li class="list-group-item list-group-item-warning"><b>Shares:</b> {{ client.is_shares }}</li>
+        <li class="list-group-item list-group-item-light"><b>Users:</b> {{ client.is_users }}</li>
+        <li class="list-group-item list-group-item-warning"><b>Connections:</b> {{ client.is_connections }}</li>
+        <li class="list-group-item list-group-item-light"><b>Messages:</b> {{ client.is_messages }}</li>
+        <li class="list-group-item list-group-item-warning"><b>API:</b> {{ client.is_api }}</li>
+    </ul>
+    {% endif %}
+    <div class="card">
+        <div class="card-title">
+            Permission justification
+        </div>
+        <div class="card-body">
+            {{ client.permission_justification }}
+        </div>
+    </div>
+    <hr>
+    <h3 class="text-center">App Details</h3>
+    <div class="card">
+        <div class="card-title">
+            Use case
+        </div>
+        <div class="card-body">
+            {{ client.use_case }}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title">
+            Developer platform
+        </div>
+        <div class="card-body">
+            {{ client.developer_platform }}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title">
+            Monetization model
+        </div>
+        <div class="card-body">
+            {{ client.monetization_model }}
+        </div>
+    </div>
+{% endblock %}

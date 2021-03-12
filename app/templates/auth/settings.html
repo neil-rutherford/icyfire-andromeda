@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <script>
+        $(function () {
+        $('[data-toggle="popover"]').popover()
+        })
+
+        var coin_balance = parseInt("{{ current_user.coins }}");
+
+        function check(input) {
+            if (input.value > coin_balance) {
+                input.setCustomValidity(`You can gift a maximum of ${coin_balance} coins.`);
+            } else {
+                input.setCustomValidity('');
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="modal fade" id="handoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Send Handout</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('main.gift_coins') }}" method="post">
+                    <label for="username" class="form-label">Recipient's username</label>
+                    <input name="username" type="text" class="form-control" id="username" placeholder="Recipient's username" maxlength="100" required>
+                    <br>
+                    <label for="amount" class="form-label">Gift amount</label>
+                    <input name="amount" type="number" class="form-control" id="amount" placeholder="How many coins do you want to give?" oninput="check(this)" required />
+                    <br>
+                    <label for="message" class="form-label">Message (optional)</label>
+                    <textarea name="message" class="form-control" id="body" rows="3" placeholder="Your message here..." maxlength="300"></textarea>
+                    <br>
+                    <div class="text-center">
+                    <button type="submit" class="btn btn-primary text-center" style="width:45%;">Send Handout</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center">About You</h2>
+    <div class="row">
+        <div class="col-sm-3 text-center">
+            {% if current_user.check_subscription() %}
+                <img src="{{ current_user.profile_pic }}" class="rounded-circle" width="50%" height="auto" alt="{{ current_user.username }}'s avatar"><br><br>
+                <a href="{{ url_for('auth.change_profile_pic') }}"><button type="button" class="btn btn-secondary btn-lg">Change profile picture</button></a><br>
+            {% else %}
+                <img src="{{ current_user.profile_pic }}" class="rounded-circle" width="50%" height="auto" alt="{{ current_user.username }}'s avatar"><br><br>
+                <button type="button" class="btn btn-secondary btn-lg disabled">Change profile picture</button><br>
+                <small class="text-muted">Want to change your profile picture? <br/><a href="{{ url_for('payment.buy_patriot_tier') }}">Become a Patriot today!</a></small>
+            {% endif %}
+        </div>
+        <div class="col">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><h4><strong>User name:</strong> <small class="text-muted">{{ current_user.username }} {% if current_user.check_subscription() %}<span class="badge bg-dark">PATRIOT</span>{% endif %}</small></h4></li>
+                <li class="list-group-item"><h4><strong>Year of birth:</strong> <small class="text-muted">{{ current_user.dob.year }}</small></h4></li>
+                {% if current_user.gender == 1 %}
+                    <li class="list-group-item"><h4><strong>Gender:</strong> <small class="text-muted">Male</small></h4></li>
+                {% else %}
+                    <li class="list-group-item"><h4><strong>Gender:</strong> <small class="text-muted">Female</small></h4></li>
+                {% endif %}
+                <li class="list-group-item">
+                {% if current_user.check_subscription() %}
+                    <form class="form-inline" action="{{ url_for('auth.set_status') }}" method="post">
+                    <div class="form-group col-sm-9">
+                        <h4><strong>Status:</strong></h4>
+                        <input class="form-control form-control-lg mb-1" id="status" name="status" type="text" placeholder="What's up?" maxlength="100" value="{{ current_user.status }}">
+                    </div>
+                    <button style="width:30%;" type="submit" class="btn btn-outline-primary btn-lg">Post</button>
+                    </form>
+                {% else %}
+                    <form class="form-inline">
+                    <div class="form-group col-sm-9">
+                        <h4><strong>Status:</strong></h4>
+                        <input class="form-control form-control-lg mb-1" id="status" name="status" type="text" placeholder="What's up?" maxlength="100" value="Upgrade to Patriot Tier to update your status." disabled>
+                    </div>
+                    <button style="width:30%;" type="button" class="btn btn-outline-primary btn-lg disabled">Post</button>
+                    </form>
+                {% endif %}
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+    <hr>
+    
+    <h2 class="text-center">Manage your account</h2>
+    <ul class="list-group">
+        <li class="list-group-item d-flex align-items-center">
+        <div style="width:25%;">
+            <h4><a href="#" data-toggle="popover" title="What are coins?" data-content="Earn coins by writing articles people really like! You can exchange 500 coins for a one-month Patriot Tier subscription.">Coins</a></h4>
+        </div>
+        <div class="flex-grow-1">
+            <h5 class="text-muted">{{ current_user.coins }}</h5>
+        </div>
+        <div>
+            <a href="{{ url_for('main.redeem_coins') }}"><button class="btn btn-secondary btn-lg">Redeem Coins</button></a>
+            <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#handoutModal">Send Handout</button>
+        </div>
+        </li>
+        {% if membership == "none" %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h5>Upgrade to Patriot Tier</h5><br/>
+                <small class="text-muted">Add to the discussion. No ads. Profile customization.</small>
+                <a href="{{ url_for('payment.buy_patriot_tier') }}"><button type="button" class="btn btn-success btn-lg">Upgrade Now</button></a>
+            </li>
+        {% elif membership == "expired" %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h5>Resume Patriot subscription</h5><br/>
+                <small class="text-muted">Your subscription expired on {{ moment(current_user.expires_on).format('LLL') }}.</small>
+                <a href="{{ url_for('payment.buy_patriot_tier') }}"><button type="button" class="btn btn-success btn-lg">Resume Subscription</button></a>
+            </li>
+        {% else %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h5>You're a Patriot!</h5><br/>
+                <small class="text-muted">Your next billing date is {{ moment(current_user.expires_on).format('LLL') }}.</small>
+                <a href="{{ url_for('payment.cancel_patriot_tier') }}" onclick="return confirm('This action will cancel your current Patriot Tier subscription. Are you sure you want to continue?');"><button type="button" class="btn btn-secondary btn-lg">Cancel Subscription</button></a>
+            </li>
+        {% endif %}
+        
+        {% if current_user.is_verified is false %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h5>Verify your email</h5><br/>
+                <small class="text-muted">Enable password recovery and email support.</small>
+                <a href="{{ url_for('auth.send_verification_email') }}"><button type="button" class="btn btn-warning btn-lg">Verify Email</button></a>
+            </li>
+        {% else %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h5>Password</h5><br/>
+                <small class="text-muted">********</small>
+                <a href="{{ url_for('auth.reset_password_request') }}" onclick="return confirm('This action will log you out. Are you sure you want to continue?');"><button type="button" class="btn btn-secondary btn-lg">Change Password</button></a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <h5>Email support</h5><br/>
+                <small class="text-muted">Do you want to receive breaking news in your inbox?</small>
+                {% if current_user.email_opt_in is false %}
+                    <a href="{{ url_for('auth.email_opt_in') }}"><button type="button" class="btn btn-secondary btn-lg">Subscribe</button></a>
+                {% else %}
+                    <a href="{{ url_for('auth.email_opt_out') }}"><button type="button" class="btn btn-secondary btn-lg">Unsubscribe</button></a>
+                {% endif %}
+            </li>
+        {% endif %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <h5>Delete Account</h4>
+            <small class="text-muted">Permanently delete your account.</small>
+            <a href="{{ url_for('auth.delete_account') }}" onclick="return confirm('This action cannot be undone. Are you sure you want to continue?');"><button type="button" class="btn btn-danger btn-lg">Delete Account</button></a>
+        </li>
+    </ul>
+{% endblock %}

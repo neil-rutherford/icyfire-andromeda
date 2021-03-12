@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Send a message</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Send a message</h1>
+    <p>If you would like to speak privately with a user, you may send them a message.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Go to the user's profile page by clicking on their username or profile picture.</li>
+        <li>In the left column under the user's profile picture, click the blue outlined <button class="btn btn-outline-primary">Message</button> button.</li>
+        <li>In the pop-up, fill out the subject and message body fields. Please note that the subject line has a 50 character limit, and the message body has a 300 character limit.</li>
+        <li>When you are finished, click the blue <button class="btn btn-primary">Send Message</button> button.</li>
+    </ol>
+    <p>If your message is successfully sent, you will see a message that says "Message sent!".</p>
+{% endblock %}

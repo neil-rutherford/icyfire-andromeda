@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <meta name="description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking." />
+  <meta itemprop="name" content="{{ title }}">
+  <meta itemprop="description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking.">
+  <meta itemprop="image" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking.">
+  <meta name="twitter:image:src" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg">
+
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/0/0e/Bald_Eagle_%28Haliaeetus_leucocephalus%29_in_Kachemak_Bay%2C_Alaska.jpg" />
+  <meta property="og:description" content="Galatea News is America's op-ed board. Find articles you're interested in, and become part of an online community that values truth and critical thinking." />
+  <meta property="og:site_name" content="Galatea News" />
+<style>
+  header {
+    position: relative;
+    background-color: black;
+    height: 50vh;
+    min-height: 25rem;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  header .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  header .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 1;
+  }
+
+  @media (pointer: coarse) and (hover: none) {
+    header {
+      background: url('https://source.unsplash.com/XT5OInaElMw/1600x900') black no-repeat center center scroll;
+    }
+    header video {
+      display: none;
+    }
+  }
+  </style>
+{% endblock %}
+
+{% block banner %}
+  <header>
+    <div class="overlay"></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted">
+      <source src="{{ url_for('static', filename='banner_videos/galatea.mp4') }}" type="video/mp4">
+    </video>
+    <div class="container h-100">
+      <div class="d-flex h-100 text-center align-items-center">
+        <div class="w-100 text-white">
+          <h1 class="display-3">About Us</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">What is Galatea?</h1>
+    <p>Galatea is America's op-ed board. We are an online community that values truth and critical thinking. Users can read, share, and contribute their opinions about current events.</p>
+
+    <h2 class="text-center">What's with the name?</h3>
+    <p>The name Galatea (Ga-luh-tee-uh) comes from a story in Greek mythology. The story is just as relevant today as it was thousands of years ago.</p>
+    <p>Pygmalion was a sculptor with unique abilities. His works were admired throughout the world. The sculptor traveled to the island of Cyprus, as he would have access to a sort of marble with such a degree of quality that his works would appear as if they had been made from ivory.</p>
+    <p>Pygmalion had a critical eye and he could only see flaws in every single woman, and because of that, he preferred celibacy. A great block of marble was delivered to his workshop. The sculptor, while looking at the raw stone, noticed in it all the necessary qualities to construct his magnum opus. He decided to edify a statue of a woman, but not a woman like the ones he saw on the streets. For him, those women were vulgar and filled with flaws.</p>
+    <p>Pygmalion readied himself to build the perfect woman - young, pretty, and virginal. But the island of Cyprus did not have a woman like that to serve as a model, so the artist tried to use his imagination as an inspiration for that woman. He began to work. For a long time, Pygmalion dedicated himself exclusively to the construction of what would be his masterpiece. The sculptor thoroughly dedicated himself to all the details of his work, and the outcome was nothing short of perfect. He has produced the most beautiful statue ever sculpted.</p>
+    <p>Pygmalion felt enchanted by his own work and gave her the name Galatea. The statue was so perfect that the artist sometimes touched her to ensure it was not a real woman. The sculptor was in love with his own work. He caressed its face and dressed it with the purest of silks. His love for the statue was so immense that he even put it in his bed to sleep alongside it.</p>
+    <p>The day of the festivities to celebrate Aphrodite, the goddess of love, arrived. Pygmalion realized that he was obsessed with Galatea, his lover of marble ivory. Pygmalion walked to the temple to pay tribute to the goddess. After making an offering, Pygmalion begged, "Goddess Aphrodite, I know that I did all that I could to avoid love, but not for once I had the intent to offend you. Now I am here, prostrate in front of your temple, subjugated to the power of love, and I beg you for a wife like my marble girl." The Goddess Aphrodite felt moved by that plea from the infatuated artist.</p>
+    <p>Pygmalion returned home to meet the statue, his beloved Galatea. The sculptor picked it from his arms and kissed it on the lips. In that moment, he felt the warmth and the softness of his lover's lips. Her body was no longer as rigid as a rock and she gave in to the tightness of his arms. Aphrodite had transformed the marble statue into a real woman, and with the blessing of the goddess of love, Pygmalion and Galatea got married. From the fruits of this union, Paphos was born, who then founded a city in the honor of Aphrodite.</p>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Comment on an article</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Comment on an article</h1>
+    <p>All users can comment on articles. This is a great way to share your thoughts and contribute to the discussion. Please be mindful of our <a href="{{ url_for('help.content_policy') }}">Content Policy</a>.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a> to your account, if you haven't already.</li>
+        <li>Navigate to the article you would like to comment on.</li>
+        <li>Scroll to the "Comments" section toward the bottom of the page.</li>
+        <li>Type your comment into the box that says <small class="text-muted">What do you think?</small>. Click the blue <button class="btn btn-primary">Post Comment</button> button when you are finished.</li>
+    </ol>
+    <p>If your comment was posted successfully, you will be redirected back to the article. You will see a message that says "Your comment was posted!".</p>
+{% endblock %}

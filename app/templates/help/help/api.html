@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item active">API</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Help - API</h1>
+    <hr>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Set-up and billing</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='create_an_app') }}">Create an app</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='subscribe_to_premium_api') }}">Subscribe to Premium API</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='unsubscribe_from_premium_api') }}">Unsubscribe from Premium API</a></li>
+        </ul>
+    </div>
+
+    <hr>
+    <h2 class="text-center">Usage / How To</h2>
+    <p class="text-center">(Asterisks indicate escalated permissions.)</p>
+    <hr>
+
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Articles</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_articles') }}">Get a list of articles</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='post_articles') }}">Publish an article</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_article') }}">Get information about an article</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='delete_article') }}">Delete an article</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Comments</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_comments') }}">Get comments for an article</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='post_comments') }}">Post a comment</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_comment') }}">Get information about a comment</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='delete_comment') }}">Delete a comment</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Activity Logs*</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_logs') }}">Get a list of logs</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_log') }}">Get information about a log</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Shares*</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_shares') }}">Get a list of shares</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_share') }}">Get information about a share</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Users</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_users') }}">Get a list of users</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='post_users') }}">Create a user account</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_user') }}">Get information about a user</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='delete_user') }}">Delete your account</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Connections*</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_followers') }}">Get a list of who follows a user</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='post_followers') }}">Follow a user</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_following') }}">Get a list of who a user is following</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_connection') }}">Get information about a relationship between two users</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>Messages</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_messages') }}">Get a list of your messages</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='post_messages') }}">Send a message</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_message') }}">Get information about a message</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='delete_message') }}">Delete a message</a></li>
+        </ul>
+    </div>
+    <br>
+    <div class="card" style="width: 50%;">
+        <div class="card-header">
+        <h4>API*</h4>
+        <small class="text-muted">Within these help pages, the terms "app", "app client", and "client" all mean the same thing.</small>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_clients') }}">Get a list of apps</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='post_clients') }}">Create an app</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='get_client') }}">Get more information about an app</a></li>
+            <li class="list-group-item"><a href="{{ url_for('help.help_title', topic='api', title='post_client') }}">Modify an app's permissions</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

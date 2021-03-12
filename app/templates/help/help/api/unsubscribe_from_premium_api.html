@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='api') }}">API</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Unsubscribe from Premium API</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Unsubscribe from Premium API</h1>
+    <p>To unsubscribe from the Premium API tier, <a href="{{ url_for('payment.cancel_premium_api') }}">please click here</a>. If this method is unsuccessful, please <a href="{{ url_for('help.contact') }}">contact us</a>.</p>
+{% endblock %}

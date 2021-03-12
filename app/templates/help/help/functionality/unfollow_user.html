@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help') }}">Help</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('help.help_topic', topic='functionality') }}">Functionality</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Unfollow a user</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center">Unfollow a user</h1>
+    <p>If you previously followed a user but no longer want to see their content and activity, you can unfollow them.</p>
+    <ol>
+        <li><a href="{{ url_for('help.help_title', topic='account', title='log_in') }}">Log in</a>, if you haven't already.</li>
+        <li>Go to the user's profile page by clicking on their username or profile picture.</li>
+        <li>In the left column under the user's profile picture, click the blue <button class="btn btn-primary">Unfollow</button> button.</li>
+    </ol>
+    <p>If you successfully follow the user, you will see a message that says "You are no longer following [USERNAME]."</p>
+{% endblock %}
