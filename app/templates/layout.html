@@ -23,6 +23,16 @@
         <!---Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WVE4C4QRQZ"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-WVE4C4QRQZ');
+        </script>
+
         <title>{% if title %}{{ title }} - Galatea News{% else %}Welcome to Galatea News{% endif %}</title>
         {% if current_user.is_anonymous or not current_user.check_subscription() %}
         <!--- Popunder -->
